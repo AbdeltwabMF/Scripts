@@ -36,7 +36,7 @@ screencast() { \
   -f alsa -i default \
   -r 30 \
   -c:v h264 -crf 0 -preset ultrafast -c:a aac \
-  $HOME/vault/vds/screencast/"screencast-$(date '+%I:%M:%S %p %Y-%m-%d')".mp4 &
+  $HOME/vault/videos/screencast/"screencast-$(date '+%I:%M:%S %p %Y-%m-%d')".mp4 &
 
   echo $! > /tmp/recordingpid
   updateicon "⏺️🎙️"
@@ -47,7 +47,7 @@ video() { ffmpeg \
   -s "$(xdpyinfo | awk '/dimensions/ {print $2}')" \
   -i "$DISPLAY" \
   -c:v libx264 -qp 0 -r 30 \
-   $HOME/vault/vds/screenonly/"video-$(date '+%I:%M:%S %p %Y-%m-%d')".mkv &
+   $HOME/vault/videos/screenonly/"video-$(date '+%I:%M:%S %p %Y-%m-%d')".mkv &
 
   echo $! > /tmp/recordingpid
   updateicon "⏺️"
@@ -57,7 +57,7 @@ webcam() { ffmpeg \
   -f v4l2 \
   -i /dev/video0 \
   -video_size "$(xdpyinfo | awk '/dimensions/ {print $2}')" \
-  $HOME/vault/vds/webcam/"webcam-$(date '+%I:%M:%S %p %Y-%m-%d')".mkv &
+  $HOME/vault/videos/webcam/"webcam-$(date '+%I:%M:%S %p %Y-%m-%d')".mkv &
 
   echo $! > /tmp/recordingpid
   updateicon "🎥"
@@ -84,7 +84,7 @@ videoselected() {
   -video_size "$W"x"$H" \
   -i :0.0+"$X,$Y" \
   -c:v libx264 -qp 0 -r 30 \
-  $HOME/vault/vds/screenonly/selected/"box-$(date '+%I:%M:%S %p %Y-%m-%d')".mkv &
+  $HOME/vault/videos/screenonly/selected/"box-$(date '+%I:%M:%S %p %Y-%m-%d')".mkv &
 
   echo $! > /tmp/recordingpid
   updateicon "⏺️"

@@ -2,7 +2,7 @@
 #
 # Take a webcam shot when someone login
 
-PIXPATH=${HOME}/vault/pix/screenshots/private/login-shot
+PIXPATH=${HOME}/vault/pictures/screenshots/private/login-shot
 pic_name=$(date +"%Y.%m.%d %I:%M:%S %p %A")
 
 fswebcam -q --no-banner -r 1366x768 ${PIXPATH}/"${pic_name}.png"

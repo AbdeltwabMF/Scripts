@@ -19,19 +19,19 @@ yt-mpv() {
 # Download audio Only
 yt-audio() {
 	setsid "${TERMINAL}" -e youtube-dl -x --audio-format "mp3" -i --add-metadata --embed-thumbnail \
-		-o "$HOME/vault/ods/Music/%(title)s.%(ext)s" "$(xclip -o)"
+		-o "$HOME/vault/audios/Music/%(title)s.%(ext)s" "$(xclip -o)"
 }
 
 # Download single video
 yt-video() {
 	setsid "${TERMINAL}" -e youtube-dl -f 22 -i --add-metadata \
-		-o "$HOME/vault/vds/Videos/%(title)s.%(ext)s" "$(xclip -o)"
+		-o "$HOME/vault/videos/Videos/%(title)s.%(ext)s" "$(xclip -o)"
 }
 
 # Download YouTube playlist videos in separate directory indexed by video order in a playlist
 yt-plist() {
 	setsid "${TERMINAL}" -e youtube-dl -f 22 -i --add-metadata \
-		-o "$HOME/vault/vds/Videos/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$(xclip -o)"
+		-o "$HOME/vault/videos/Videos/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$(xclip -o)"
 }
 
 choice=$(echo -e "Watch\nAudio-dl\nVideo-dl\nPlaylist-dl" \
