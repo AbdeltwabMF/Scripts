@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+state=$(pgrep bluetoothd)
+
+ICON_ON=""
+ICON_OFF=""
+
+if [[ $state ]]; then
+    ICON="$ICON_ON"
+else
+    ICON="$ICON_OFF"
+fi
+
+echo "$ICON"
