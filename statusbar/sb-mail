@@ -3,13 +3,13 @@
 # Displays count of unread inbox and spam mails.
 
 ICON=""
-work_inbox_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/Work/Inbox/new/* -type f 2>/dev/null | wc -l)
-work_spam_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/Work/\[Gmail\]/Spam/new/* -type f 2>/dev/null | wc -l)
+work_inbox_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/work/Inbox/new/* -type f 2>/dev/null | wc -l)
+work_spam_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/work/\[Gmail\]/Spam/new/* -type f 2>/dev/null | wc -l)
 
-uni_inbox_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/Uni/Inbox/new/* -type f 2>/dev/null | wc -l)
-uni_spam_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/Uni/Spambox/new/* -type f 2>/dev/null | wc -l)
+azhar_inbox_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/azhar/Inbox/new/* -type f 2>/dev/null | wc -l)
+azhar_spam_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/azhar/Spambox/new/* -type f 2>/dev/null | wc -l)
 
-unread=$((work_inbox_new + work_spam_new + uni_inbox_new + uni_spam_new))
+unread=$((work_inbox_new + work_spam_new + azhar_inbox_new + azhar_spam_new))
 
 # Notify on new mails
 mailnotify

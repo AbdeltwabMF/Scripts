@@ -9,10 +9,10 @@ readonly ICON="/usr/share/icons/Adwaita/256x256/legacy/mail-message-new.png"
 readonly PREFIX="/home/amf/.local/share/Mail/"
 
 declare -a locations=(
-"Work/Inbox/new"
-"Work/[Gmail]/Spam/new"
-"Uni/Inbox/new"
-"Uni/Spambox/new"
+	"Work/Inbox/new"
+	"Work/[Gmail]/Spam/new"
+	"Uni/Inbox/new"
+	"Uni/Spambox/new"
 )
 
 declare -a messages_time=()
