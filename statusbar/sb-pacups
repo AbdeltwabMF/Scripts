@@ -3,10 +3,16 @@
 # Display how many packages need approval to be update
 
 ICON=""
+CACHE_FILE="$HOME/.cache/pacups.packages"
 packages=$(sudo pacman -Qu | grep -Fcv "[ignored]")
 
 echo -e "${ICON} ${packages}"
 
 case ${BUTTON} in
-  1) setsid -f "${TERMINAL}" -e sudo pacman -Su --noconfirm ;;
+  1)  echo sudo pacman -Su > "$CACHE_FILE" && sudo pacman -Qu >> "$CACHE_FILE" ;
+      choice=$(cat  ~/.cache/pacups.packages | dmenu -p "Upgraded packages:" -l 15) \
+      && [[ "$choice" == "sudo pacman -Su" ]] \
+      && setsid "$TERMINAL" -e sudo pacman -Su \
+      && exit
+    ;;
 esac
