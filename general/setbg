@@ -8,20 +8,21 @@
 # 3. nothing.
 #		>> to choose a random pic from $DATA/$WALL and make it the new wallpaper.
 
-readonly CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"
-readonly DATA="${XDG_DATA_HOME:-$HOME/.local/share}"
-readonly WALL="wallpapers"
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"
+DATA="${XDG_DATA_HOME:-$HOME/.local/share}"
+WALL="wallpapers"
 
-[[ -d "${CACHE}/${WAL}" ]] || mkdir -p "${CACHE}/${WALL}"
+[[ -d "${CACHE}"/"${WALL}" ]] || mkdir -p "${CACHE}"/"${WALL}"
 
 if [[ -d "$1" ]]; then
-	cp "$(find "$1" -name "*.jpg" | shuf -n 1)" "${CACHE}/${WALL}/wall.jpg"
+	cp "$(find "$1" -name "*.jpg" | shuf -n 1)" "${CACHE}"/"${WALL}"/wall.jpg
 elif [[ -f "$1" ]]; then
-	cp "$1" "${CACHE}/${WALL}/wall.jpg"
-elif [[ -d "${DATA}/${WALL}" ]]; then
-	cp "$(find "${DATA}/${WALL}" -name "*.jpg" | shuf -n 1)" "${CACHE}/${WALL}/wall.jpg"
+	cp "$1" "${CACHE}"/"${WALL}"/wall.jpg
+elif [[ -d "${DATA}"/"${WALL}" ]]; then
+	cp "$(find "${DATA}"/"${WALL}" -name "*.jpg" | shuf -n 1)" "${CACHE}"/"${WALL}"/wall.jpg
 else
 	exit 1
 fi
 
-xwallpaper --zoom "${CACHE}/${WALL}/wall.jpg" >/dev/null 2>&1 && notify-send "Wallpaper" "wallpaper has been changed!" -i "${CACHE}/${WALL}/wall.jpg"
+xwallpaper --zoom "${CACHE}"/"${WALL}"/wall.jpg >/dev/null 2>&1 \
+	&& notify-send "Wallpaper" "wallpaper has been changed!" -i "${CACHE}"/"${WALL}"/wall.jpg

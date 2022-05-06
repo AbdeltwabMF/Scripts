@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-KBD_DIR="$HOME"/.config/x11/xkbd
+XKBD_DIR="$HOME"/.config/x11/xkeybindings
 
 setxkbmap -layout ar
 
-[ -f "$KBD_DIR"/.Xmodmap_ar ] && xmodmap "$KBD_DIR"/.Xmodmap_ar
+[[ -f "${XKBD_DIR}"/.Xmodmap_ar ]] \
+	&& xmodmap "${XKBD_DIR}"/.Xmodmap_ar
