@@ -16,7 +16,7 @@ version="0.0.1"
 ####################
 
 # the dir where wallpapers are stored
-walldir="$HOME/vault/pictures/wallpapers/wallhaven"
+walldir="$HOME/.local/share/wallpapers/wallhaven"
 
 # the dir used to cache thumbnails
 cachedir="$HOME/.cache/wallhaven"
