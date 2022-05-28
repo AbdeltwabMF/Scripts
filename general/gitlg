@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+#
+# Preview git log with fzf.
+
+git log --oneline | fzf --multi --preview 'git show {+1}'
