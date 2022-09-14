@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Watch or Download an online video or audio
-# using youtube-dl and mpv combined as a backend
+# using yt-dlp and mpv combined as a backend
 # using dmenu as a frontend
 
 TMP_DIR="/tmp/dmenu_ytdl"
@@ -18,19 +18,19 @@ yt-mpv() {
 
 # Download audio Only
 yt-audio() {
-	setsid "${TERMINAL}" -e youtube-dl -x --audio-format "mp3" -i --add-metadata --embed-thumbnail \
+	setsid "${TERMINAL}" -e yt-dlp -x --audio-format "mp3" -i --add-metadata --embed-thumbnail \
 		-o "$HOME/vault/audios/Music/%(title)s.%(ext)s" "$(xclip -o)"
 }
 
 # Download single video
 yt-video() {
-	setsid "${TERMINAL}" -e youtube-dl -f 22 -i --add-metadata \
+	setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
 		-o "$HOME/vault/videos/Videos/%(title)s.%(ext)s" "$(xclip -o)"
 }
 
 # Download YouTube playlist videos in separate directory indexed by video order in a playlist
 yt-plist() {
-	setsid "${TERMINAL}" -e youtube-dl -f 22 -i --add-metadata \
+	setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
 		-o "$HOME/vault/videos/Videos/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$(xclip -o)"
 }
 
