@@ -1,13 +1,15 @@
 #!/bin/bash
 
 ICON=""
-signal=$(nmcli device wifi list | grep "*" | sed -ne '1p' | awk '{print $8}')
-[[ "${signal}" =~ ^[0-9]{1,3}$ ]] || ICON="📡"
+wifi=$(nmcli dev show wlan0 | awk '/GENERAL.STATE/ {print $2}')
+(( wifi == 30 )) && ICON="📡"
+
+# TODO ethernet connection
 
 echo -e "${ICON}"
 
 case ${BUTTON} in
-  1) [[ "${signal}" =~ ^[0-9]{1,3}%$ ]] && \
+  1) (( wifi == 30 )) && \
 		speed=$(speed-test -j);
 		notify-send -t 10000 "📡 Internet Speed Test" " : $(echo "${speed}" | jq '.["download"]') Mbit/s
  : $(echo "${speed}" | jq '.["upload"]') Mbit/s
