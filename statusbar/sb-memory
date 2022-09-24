@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-precentage=$(free  -m | awk 'FNR == 2 {printf "%05.2f\n", (($2 - $7) / $2 * 100)}')
-ICON=""
+MEMORY_ICON=""
+# precentage=$(free  -m | awk 'FNR == 2 {printf "%05.2f\n", (($2 - $7) / $2 * 100)}')
+precentage=$(free  -m | awk 'FNR == 2 {printf "%s", int(($2 - $7) / $2 * 100)}')
 
-echo -e "${ICON} ${precentage}%"
+echo -e "${MEMORY_ICON} ${precentage}%"
 
 case ${BUTTON} in
   1)

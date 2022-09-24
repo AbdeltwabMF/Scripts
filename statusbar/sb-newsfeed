@@ -1,22 +1,26 @@
-#!/bin/bash
+#!/usr/bin/bash
 #
 # Print unread newsboat feeds.
 
-CACHEDIR="/tmp/newsboat"
-mkdir -p "$CACHEDIR"
+CACHE_DIR="/tmp/newsboat"
+mkdir -p "$CACHE_DIR"
 
 ICON=""
 unread=$(newsboat -x print-unread | cut -d ' ' -f 1)
 
 if [[ ${unread} = "Error:" ]]; then
-	! [[ -f ${CACHEDIR}/unread.txt ]] && exit 1
-	unread=$(cat ${CACHEDIR}/unread.txt)
+	! [[ -f ${CACHE_DIR}/unread.txt ]] && exit 1
+	unread=$(cat ${CACHE_DIR}/unread.txt)
 else
-	echo -e "${unread}" > ${CACHEDIR}/unread.txt
+	if ((unread>=10))
+	then
+		unread="+9"
+	fi
+	echo -e "${unread}" > ${CACHE_DIR}/unread.txt
 fi
 
-echo -e "${ICON} $(cat ${CACHEDIR}/unread.txt)"
+echo -e "${ICON} $(cat ${CACHE_DIR}/unread.txt)"
 
-case  ${BUTTON} in
+case ${BUTTON} in
 	1) setsid "${TERMINAL}" -e newsboat ;;
 esac
