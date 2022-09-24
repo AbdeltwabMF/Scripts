@@ -2,7 +2,7 @@
 #
 # Displays count of unread inbox and spam mails.
 
-ICON=""
+MAIL_ICON=""
 work_inbox_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/work/Inbox/new/* -type f 2>/dev/null | wc -l)
 work_spam_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/work/\[Gmail\]/Spam/new/* -type f 2>/dev/null | wc -l)
 
@@ -14,7 +14,12 @@ unread=$((work_inbox_new + work_spam_new + azhar_inbox_new + azhar_spam_new))
 # Notify on new mails
 mailnotify
 
-echo "${ICON} ${unread}"
+if ((unread > 99));
+then
+  unread="+99";
+fi
+
+echo "${MAIL_ICON} ${unread}"
 
 case "${BUTTON}" in
   1) setsid -f "${TERMINAL}" -e neomutt ;;

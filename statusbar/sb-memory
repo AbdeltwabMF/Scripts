@@ -2,7 +2,7 @@
 
 MEMORY_ICON=""
 # precentage=$(free  -m | awk 'FNR == 2 {printf "%05.2f\n", (($2 - $7) / $2 * 100)}')
-precentage=$(free  -m | awk 'FNR == 2 {printf "%s", int(($2 - $7) / $2 * 100)}')
+precentage=$(free  -m | awk 'FNR == 2 {printf "%02.00f\n", (($2 - $7) / $2 * 100)}')
 
 echo -e "${MEMORY_ICON} ${precentage}%"
 

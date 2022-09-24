@@ -12,9 +12,9 @@ if [[ ${unread} = "Error:" ]]; then
 	! [[ -f ${CACHE_DIR}/unread.txt ]] && exit 1
 	unread=$(cat ${CACHE_DIR}/unread.txt)
 else
-	if ((unread>=10))
+	if ((unread > 99))
 	then
-		unread="+9"
+		unread="+99"
 	fi
 	echo -e "${unread}" > ${CACHE_DIR}/unread.txt
 fi

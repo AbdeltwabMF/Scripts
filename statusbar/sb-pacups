@@ -6,9 +6,9 @@ PACKAGE_ICON=""
 CACHE_FILE="$HOME/.cache/pacups.packages"
 packages=$(sudo pacman -Qu | grep -Fcv "[ignored]")
 
-if ((packages >= 10));
+if ((packages > 99));
 then
-  packages="+9"
+  packages="+99"
 fi
 
 echo -e "${PACKAGE_ICON} ${packages}"
