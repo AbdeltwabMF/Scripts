@@ -1,15 +1,22 @@
-#!/bin/bash
+#!/usr/bin/bash
 #
 # Displays count of unread inbox and spam mails.
 
 MAIL_ICON=""
-work_inbox_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/work/Inbox/new/* -type f 2>/dev/null | wc -l)
-work_spam_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/work/\[Gmail\]/Spam/new/* -type f 2>/dev/null | wc -l)
+PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}"/Mail
 
-azhar_inbox_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/azhar/Inbox/new/* -type f 2>/dev/null | wc -l)
-azhar_spam_new=$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/azhar/Spambox/new/* -type f 2>/dev/null | wc -l)
+gmail_inbox_new=$(find "$PREFIX"/gmail/Inbox/new/* -type f 2>/dev/null | wc -l)
+gmail_2_inbox_new=$(find "$PREFIX"/gmail_2/Inbox/new/* -type f 2>/dev/null | wc -l)
+office_inbox_new=$(find "$PREFIX"/office/Inbox/new/* -type f 2>/dev/null | wc -l)
+azhar_uni_inbox_new=$(find "$PREFIX"/azhar-uni/Inbox/new/* -type f 2>/dev/null | wc -l)
 
-unread=$((work_inbox_new + work_spam_new + azhar_inbox_new + azhar_spam_new))
+gmail_spam_new=$(find "$PREFIX"/gmail/\[Gmail\]/Spam/new/* -type f 2>/dev/null | wc -l)
+gmail_2_spam_new=$(find "$PREFIX"/gmail_2/\[Gmail\]/Spam/new/* -type f 2>/dev/null | wc -l)
+office_spam_new=$(find "$PREFIX"/office/Junk/new/* -type f 2>/dev/null | wc -l)
+azhar_uni_spam_new=$(find "$PREFIX"/azhar-uni/Spambox/new/* -type f 2>/dev/null | wc -l)
+
+unread=$((gmail_inbox_new + gmail_2_inbox_new + azhar_uni_inbox_new + office_inbox_new))
+unread=$((unread + gmail_spam_new + gmail_2_spam_new + azhar_uni_spam_new + office_spam_new))
 
 # Notify on new mails
 mailnotify
