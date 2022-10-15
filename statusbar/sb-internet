@@ -9,10 +9,5 @@ wifi=$(nmcli dev show wlan0 | awk '/GENERAL.STATE/ {print $2}')
 echo -e "${ICON}"
 
 case ${BUTTON} in
-  1) (( wifi == 30 )) && \
-		speed=$(speed-test -j);
-		notify-send -t 10000 "📡 Internet Speed Test" " : $(echo "${speed}" | jq '.["download"]') Mbit/s
- : $(echo "${speed}" | jq '.["upload"]') Mbit/s
-Ping : $(echo "${speed}" | jq '.["ping"]') ms"
-		;;
+  1) sudo sv restart NetworkManager ;;
 esac
