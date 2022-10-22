@@ -25,10 +25,11 @@ time=$(date +"%I:%M %p")
 
 echo -e "$ICON $time"
 
-case  ${BUTTON} in
-  1) notify-send "This Month" "$(cal --color=always \
-    | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" \
-    && notify-send "Appointments" "$(calcurse -d3)"
-    ;;
-  2) setsid -f "$TERMINAL" -e calcurse ;;
+case ${BUTTON} in
+    1)
+        notify-send "This Month" "$(cal --color=always |
+            sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" &&
+            notify-send "Appointments" "$(calcurse -d3)"
+        ;;
+    2) setsid -f "$TERMINAL" -e calcurse ;;
 esac

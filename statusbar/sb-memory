@@ -1,17 +1,17 @@
 #!/usr/bin/bash
 
-MEMORY_ICON=""
+MEMORY_ICON=""
 # precentage=$(free  -m | awk 'FNR == 2 {printf "%05.2f\n", (($2 - $7) / $2 * 100)}')
-precentage=$(free  -m | awk 'FNR == 2 {printf "%02.00f\n", (($2 - $7) / $2 * 100)}')
+precentage=$(free -m | awk 'FNR == 2 {printf "%02.00f\n", (($2 - $7) / $2 * 100)}')
 
 echo -e "${MEMORY_ICON} ${precentage}%"
 
 case ${BUTTON} in
-  1)
-    notify-send "Biggest Memory hogs:" \
-      "$(ps axch -o %mem,cmd --sort=-%mem \
-      | sed 11q | awk 'BEGIN { printf "%-20s %s\n", "Process:", "Usage:";
+    1)
+        notify-send "Biggest Memory hogs:" \
+            "$(ps axch -o %mem,cmd --sort=-%mem |
+                sed 11q | awk 'BEGIN { printf "%-20s %s\n", "Process:", "Usage:";
           printf "%-20s %s\n", "--------", "------" }
           { printf "%-20s %s\n", $2, $1 "%" }')"
-    ;;
+        ;;
 esac

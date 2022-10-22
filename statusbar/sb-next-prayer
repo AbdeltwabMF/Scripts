@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+#
+#
+
+ICON=""
+next_prayer=$(next-prayer --hybrid)
+
+echo "$ICON $next_prayer"

@@ -2,12 +2,12 @@
 
 ICON=""
 wifi=$(nmcli dev show wlan0 | awk '/GENERAL.STATE/ {print $2}')
-(( wifi == 30 )) && ICON="📡"
+((wifi == 30)) && ICON="睊"
 
 # TODO ethernet connection
 
 echo -e "${ICON}"
 
 case ${BUTTON} in
-  1) sudo sv restart NetworkManager ;;
+    1) sudo sv restart NetworkManager ;;
 esac
