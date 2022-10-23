@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+#
+# Generate and change color-schemes on the fly.
+
+# if wal not found install it
+# make sure you update pacman with your package manager or install it manually
+if ! which wal > /dev/null 2>&1; then
+    sudo pacman -S python-pywal
+fi
+
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"
+WALL="wallpapers"
+
+# clean cache
+wal -c
+# generate color-schemes
+wal -i "${CACHE}"/"${WALL}"/wall.jpg

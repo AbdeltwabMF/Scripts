@@ -1,8 +1,0 @@
-#!/usr/bin/bash
-#
-# Generate and change color-schemes on the fly.
-
-CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"
-WALL="wallpapers"
-
-wal -c && wal -i "${CACHE}"/"${WALL}"/wall.jpg
