@@ -2,25 +2,28 @@
 #
 # Display current keyboard layout
 
-# readonly ICON=""
+readonly ICON=""
 
 get_layout() {
-	local layout
-	local ret
-	layout=$(setxkbmap -query | tr , ' ' | awk 'FNR == 3 {print $2}')
+  local layout
+  local ret
+  layout=$(setxkbmap -query | tr , ' ' | awk 'FNR == 3 {print $2}')
 
-	case "${layout}" in
-		ar) ret="ar" ;;
-		us) ret="us" ;;
-		*) us-layout; ret="us" ;;
-	esac
+  case "${layout}" in
+    ar) ret="ar" ;;
+    us) ret="us" ;;
+    *)
+      us-layout
+      ret="us"
+      ;;
+  esac
 
-	echo "${ret}"
+  echo "${ret}"
 }
 
-# echo "$ICON $(get_layout)"
-echo "$(get_layout)"
+echo "$ICON $(get_layout)"
+# echo "$(get_layout)"
 
 case "${BUTTON}" in
-	1) lo-toggle ;;
+  1) lo-toggle ;;
 esac
