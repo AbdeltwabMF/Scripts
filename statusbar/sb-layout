@@ -1,29 +1,31 @@
 #!/usr/bin/bash
 #
-# Display current keyboard layout
+# Author: Abd El-Twab M. Fakhry
+# Description: Display current keyboard layout
+# License: GPLv3+
 
-readonly ICON=""
+LANG_ICON=""
 
 get_layout() {
   local layout
-  local ret
+  local lang
   layout=$(setxkbmap -query | tr , ' ' | awk 'FNR == 3 {print $2}')
 
   case "${layout}" in
-    ar) ret="ar" ;;
-    us) ret="us" ;;
+    ar) lang="ar" ;;
+    us) lang="us" ;;
     *)
-      us-layout
-      ret="us"
+      # Force toggle
+      toggle-layout "us"
+      lang="us"
       ;;
   esac
 
-  echo "${ret}"
+  printf "%s" "${lang}"
 }
 
-echo "$ICON $(get_layout)"
-# echo "$(get_layout)"
+echo "$LANG_ICON $(get_layout)"
 
 case "${BUTTON}" in
-  1) lo-toggle ;;
+  1) toggle-layout ;;
 esac

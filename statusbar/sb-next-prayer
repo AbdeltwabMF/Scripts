@@ -2,7 +2,7 @@
 #
 #
 
-ICON=""
+NEXT_PRAYER_ICON=""
 next_prayer=$(next-prayer --hybrid)
 
-echo "$ICON $next_prayer"
+printf "%s" "$NEXT_PRAYER_ICON $next_prayer"

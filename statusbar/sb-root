@@ -1,6 +1,10 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-ICON=""
+ROOT_ICON=""
 used=$(df -h | grep '/$' | awk '{print $5}')
 
-echo -e "$ICON $used"
+printf "%s" "$ROOT_ICON $used"
+
+case ${BUTTON} in
+  1) ;;
+esac

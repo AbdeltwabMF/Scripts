@@ -1,8 +1,0 @@
-#!/bin/bash
-
-XKBD_DIR="$HOME"/.config/x11/xkeybindings
-
-setxkbmap -layout us
-
-[[ -f "${XKBD_DIR}"/.Xmodmap_us ]] \
-	&& xmodmap "${XKBD_DIR}"/.Xmodmap_us

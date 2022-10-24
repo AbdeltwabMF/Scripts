@@ -1,23 +1,24 @@
 #!/usr/bin/bash
 #
-# Display how many packages need approval to be update
+# Description: Display how many packages need approval to be update
 
-PACKAGE_ICON=""
 CACHE_FILE="$HOME/.cache/pacups.packages"
+PACKAGE_ICON=""
+
 packages=$(sudo pacman -Qu | grep -Fcv "[ignored]")
 
 if ((packages > 99)); then
-    packages="+99"
+  packages="+99"
 fi
 
-echo -e "${PACKAGE_ICON} ${packages}"
+show_packages() {
+  sudo pacman -Qu > "$CACHE_FILE"
+  choice=$(cat "$CACHE_FILE" | awk '{printf "%-60s%-10s%-4s%s\n", $1, $2, $3, $4}' | dmenu -p "Available upgrades" -l 15)
+  [[ -n "$choice" ]] && setsid "$TERMINAL" -e sudo pacman -Su --noconfirm
+}
+
+printf "%s" "${PACKAGE_ICON} ${packages}"
 
 case ${BUTTON} in
-    1)
-        echo sudo pacman -Su > "$CACHE_FILE" && sudo pacman -Qu >> "$CACHE_FILE"
-        choice=$(cat "$HOME"/.cache/pacups.packages | dmenu -p "Upgraded packages:" -l 15) &&
-            [[ "$choice" == "sudo pacman -Su" ]] &&
-            setsid "$TERMINAL" -e sudo pacman -Su &&
-            exit
-        ;;
+  1) show_packages ;;
 esac

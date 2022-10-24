@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/usr/bin/bash
+#
+#
+#
 
 volume_up=""
 volume_down=""
@@ -6,7 +9,7 @@ volume_mid="墳"
 volume_off="婢"
 volume_mute="ﱝ"
 
-volume_percentage=$(pamixer --get-volume)
+percentage=$(pamixer --get-volume)
 is_muted=$(pamixer --get-mute)
 
 # -eg -> equal
@@ -14,20 +17,20 @@ is_muted=$(pamixer --get-mute)
 # -gt -> greaterthan
 
 if [[ "$is_muted" == "true" ]]; then
-    ICON=${volume_mute}
-elif [[ "$volume_percentage" == "0" ]]; then
-    ICON=${volume_off}
-    # ${word/pattern/replacement}
-elif [[ "${volume_percentage//%/}" -lt 33 ]]; then
-    ICON=${volume_down}
-elif [[ "${volume_percentage//%/}" -lt 66 ]]; then
-    ICON=${volume_mid}
+  ICON=${volume_mute}
+elif [[ "$percentage" == "0" ]]; then
+  ICON=${volume_off}
+  # ${word/pattern/replacement}
+elif [[ "${percentage//%/}" -lt 33 ]]; then
+  ICON=${volume_down}
+elif [[ "${percentage//%/}" -lt 66 ]]; then
+  ICON=${volume_mid}
 else
-    ICON=${volume_up}
+  ICON=${volume_up}
 fi
 
-echo -e "${ICON} ${volume_percentage}%"
+echo -e "${ICON} ${percentage}%"
 
 case ${BUTTON} in
-    1) setsid pavucontrol ;;
+  1) setsid pavucontrol ;;
 esac

@@ -1,44 +1,68 @@
-#!/bin/bash
+#!/usr/bin/bash
+#
+#
+
+HEADER="Battery Info"
+IS_ONLINE=/tmp/sb-battery-online
+touch $IS_ONLINE
 
 state=$(acpi -b | sed "s/^.*: //g; s/%.*$//g; s/,.*$//g")
 percentage=$(acpi -b | sed "s/^.*: //g; s/%.*$//g; s/^.*, //g")
+adapter=$(acpi -a | awk '/Adapter/ {print $3}')
 
-notify_low() {
-    case "$1" in
-        25)
-            notify-send -u low "Battery Info" \
-                "We ran out of energy!"
-            ;;
-        15)
-            notify-send -u normal "Battery Info" \
-                "Come on! you have to do something, bro!"
-            ;;
-        5)
-            notify-send -u critical "Battery Info" \
-                "Tesla is upset with you!"
-            ;;
-    esac
+info() {
+  printf "%s" "$(acpi -iab | sed "s/^.*: //g; s/, /\n/g")"
 }
 
+notify() {
+  case "$1" in
+    35)
+      notify-send -u low "$HEADER" \
+        "We ran out of energy!"
+      ;;
+    25)
+      notify-send "$HEADER" \
+        "Come on! you have to do something, bro!"
+      ;;
+    15)
+      notify-send -u critical "$HEADER" \
+        "Tesla is upset with you!"
+      ;;
+    "con")
+      notify-send "$HEADER" \
+        "Adapter $adapter"
+      ;;
+    "info")
+      notify-send "$HEADER" \
+        "$(info)"
+      ;;
+  esac
+}
+
+if [[ "$(cat $IS_ONLINE)" != "$adapter" ]]; then
+  echo "$adapter" > $IS_ONLINE
+  notify "con"
+fi
+
+notify "$percentage"
+
 case "${state}" in
-    "Discharging") status="" ;;
-    "Charging") status="" ;;
-    "Not charging") status="ﮤ" ;;
-    "Unknown") status="ﳠ" ;;
-    "Full") status="" ;;
-    "")
-        status=""
-        percentage="AC"
-        ;;
+  "Discharging") status="" ;;
+  "Charging") status="" ;;
+  "Not charging") status="ﮤ" ;;
+  "Unknown") status="ﳠ" ;;
+  "Full") status="" ;;
+  "")
+    status=""
+    percentage="AC"
+    ;;
 esac
 
 [[ "$state" == "Discharging" ]] && [[ "${percentage}" -lt 20 ]] && status=""
 [[ "${percentage}" != "AC" ]] && percentage="${percentage}%"
 
-notify_low percentage
-
 echo -e "$status $percentage"
 
 case ${BUTTON} in
-    1) notify-send "Battery Info" "$(acpi -iab | sed "s/^.*: //g; s/, /\n/g")" ;;
+  1) notify "info" ;;
 esac

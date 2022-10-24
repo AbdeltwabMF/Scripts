@@ -1,13 +1,44 @@
-#!/bin/bash
+#!/usr/bin/bash
+#
+# Author: Abd El-Twab M. Fakhry
+# Description: Show current connection info
+# License: GPLv3+
 
 ICON=""
 wifi=$(nmcli dev show wlan0 | awk '/GENERAL.STATE/ {print $2}')
 ((wifi == 30)) && ICON="睊"
 
-# TODO ethernet connection
+# TODO(@AbdeltwabMF): ethernet connection
+
+print_line() {
+  printf "%-20s %s\n" "$1" "$2"
+}
+
+show_connection_info() {
+  local state
+  local name
+  local ip4_address
+  local ip6_address
+  local hardware_address
+  local type
+
+  state="$(nmcli dev show wlan0 | awk '/GENERAL.STATE/ {print $3}')"
+  name="$(nmcli dev show wlan0 | awk '/GENERAL.CONNECTION/ {print $2}')"
+  ip4_address="$(nmcli dev show wlan0 | awk '/IP4.ADDRESS/ {print $2}')"
+  ip6_address="$(nmcli dev show wlan0 | awk '/IP6.ADDRESS/ {print $2}')"
+  hardware_address="$(nmcli dev show wlan0 | awk '/GENERAL.HWADDR/ {print $2}')"
+  type="$(nmcli dev show wlan0 | awk '/GENERAL.TYPE/ {print $2}')"
+
+  print_line "Connection Type" "$type"
+  print_line "Network Name" "$name"
+  print_line "State" "$state"
+  print_line "IP4" "$ip4_address"
+  print_line "IP6" "$ip6_address"
+  print_line "Hardware Address" "$hardware_address"
+}
 
 echo -e "${ICON}"
 
 case ${BUTTON} in
-    1) sudo sv restart NetworkManager ;;
+  1) notify-send "Network Info" "$(show_connection_info)" ;;
 esac

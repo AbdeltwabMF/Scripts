@@ -4,11 +4,12 @@ state=$(pgrep bluetoothd)
 
 ICON_ON=""
 ICON_OFF=""
+ICON_CONNECT=""
 
 if [[ $state ]]; then
-    ICON="$ICON_ON"
+  ICON="$ICON_ON"
 else
-    ICON="$ICON_OFF"
+  ICON="$ICON_OFF"
 fi
 
 echo "$ICON"

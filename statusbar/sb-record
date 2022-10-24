@@ -1,8 +1,15 @@
-#!/bin/bash
+#!/usr/bin/bash
+#
+#
+#
 
-record_icon=$(cat /tmp/recordingicon)
+ICON_FILE=/tmp/recordingicon
+touch $ICON_FILE
+RECORD_ICON=""
 
-echo -e "${record_icon}"
+[[ -z "$(cat $ICON_FILE)" ]] && echo "$RECORD_ICON" > "$ICON_FILE"
+
+printf "%s" "${RECORD_ICON}"
 
 case ${BUTTON} in
   1) dmenu_record ;;
