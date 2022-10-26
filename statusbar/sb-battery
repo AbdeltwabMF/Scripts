@@ -4,29 +4,43 @@
 
 HEADER="Battery Info"
 IS_ONLINE=/tmp/sb-battery-online
+STATE=/tmp/sb-battery-state
+
+touch $STATE
 touch $IS_ONLINE
 
 state=$(acpi -b | sed "s/^.*: //g; s/%.*$//g; s/,.*$//g")
 percentage=$(acpi -b | sed "s/^.*: //g; s/%.*$//g; s/^.*, //g")
 adapter=$(acpi -a | awk '/Adapter/ {print $3}')
 
+[[ $percentage -lt 15 ]] && cat /dev/null > $STATE
+
 info() {
   printf "%s" "$(acpi -iab | sed "s/^.*: //g; s/, /\n/g")"
+}
+
+first_timer() {
+  [[ "$adapter" == "on-line" ]] && echo 0
+  [[ -z "$(cat $STATE)" ]] && echo 1
+  [[ "$(cat $STATE)" == "$1" ]] && echo 0 || echo 1
 }
 
 notify() {
   case "$1" in
     35)
-      notify-send -u low "$HEADER" \
+      [[ "$(first_timer 35)" == "1" ]] && notify-send -u low "$HEADER" \
         "We ran out of energy!"
+      echo "35" > $STATE
       ;;
     25)
-      notify-send "$HEADER" \
+      [[ "$(first_timer 25)" == "1" ]] && notify-send "$HEADER" \
         "Come on! you have to do something, bro!"
+      echo "25" > $STATE
       ;;
     15)
-      notify-send -u critical "$HEADER" \
+      [[ "$(first_timer 15)" == "1" ]] && notify-send -u critical "$HEADER" \
         "Tesla is upset with you!"
+      echo "15" > $STATE
       ;;
     "con")
       notify-send "$HEADER" \
@@ -47,21 +61,21 @@ fi
 notify "$percentage"
 
 case "${state}" in
-  "Discharging") status="" ;;
+  "Discharging") status="" ;;
   "Charging") status="" ;;
   "Not charging") status="ﮤ" ;;
   "Unknown") status="ﳠ" ;;
-  "Full") status="" ;;
+  "Full") status="" ;;
   "")
-    status=""
+    status=""
     percentage="AC"
     ;;
 esac
 
-[[ "$state" == "Discharging" ]] && [[ "${percentage}" -lt 20 ]] && status=""
+[[ "$adapter" == "of-line" ]] && [[ "${percentage}" -le 15 ]] && status=""
 [[ "${percentage}" != "AC" ]] && percentage="${percentage}%"
 
-echo -e "$status $percentage"
+printf "%s" "$status $percentage"
 
 case ${BUTTON} in
   1) notify "info" ;;

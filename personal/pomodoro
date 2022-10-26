@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+#
+# Callable script every 0, 25, 50 minutes
+
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/sbin/dmenu"
+export PATH="$PATH:$HOME/.local/sbin/general"
+export PATH="$PATH:$HOME/.local/sbin/personal"
+export PATH="$PATH:$HOME/.local/sbin/statusbar"
+export DBUS_SESSION_BUS_ADDRESS
+DBUS_SESSION_BUS_ADDRESS=$(cat /tmp/dbus-current-session)
+
+message_body() {
+  if [[ "$(date "+%M")" -eq "50" ]]; then
+    echo "You've done a great job"
+    echo "Time to take a break 😌"
+  else
+    echo "A new session has begun"
+    echo "You have 25 minutes to achieve something valuable 🤓"
+  fi
+}
+
+notify-send "⏰ Pomodoro Cronie" "$(message_body)"

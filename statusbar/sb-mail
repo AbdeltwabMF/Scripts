@@ -22,11 +22,11 @@ unread=$((unread + gmail_spam_new + gmail_2_spam_new + azhar_uni_spam_new + offi
 mailnotify
 
 if ((unread > 99)); then
-    unread="+99"
+  unread="+99"
 fi
 
 echo "${MAIL_ICON} ${unread}"
 
 case "${BUTTON}" in
-    1) setsid -f "${TERMINAL}" -e neomutt ;;
+  1) setsid -f "${TERMINAL}" -e neomutt ;;
 esac

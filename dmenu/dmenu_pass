@@ -1,20 +1,23 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
+#
+#
+#
 
 shopt -s nullglob globstar
+PREFIX=${PASSWORD_STORE_DIR:-~/.password-store}
 
 if [[ -n $DISPLAY ]]; then
-	dmenu=dmenu
+  dmenu=dmenu
 else
-	echo "Error: No X11 display detected" >&2
-	exit 1
+  echo "Error: No X11 display detected" >&2
+  exit 1
 fi
 
-prefix=${PASSWORD_STORE_DIR:-~/.password-store}
-password_files=( "$prefix"/**/*.gpg )
-password_files=( "${password_files[@]#"$prefix"/}" )
-password_files=( "${password_files[@]%.gpg}" )
+password_files=("$PREFIX"/**/*.gpg)
+password_files=("${password_files[@]#"$prefix"/}")
+password_files=("${password_files[@]%.gpg}")
 
-password=$(printf '%s\n' "${password_files[@]}" | "$dmenu" "$@" -l 15 -p "Pass: ")
+password=$(printf '%s\n' "${password_files[@]}" | sed 's/^.*password-store\///g' | "$dmenu" "$@" -l 15 -p "Pass: ")
 
 [[ -n $password ]] || exit
 
@@ -24,7 +27,7 @@ otp_regex='(otp)'
 [[ "$password" =~ $otp_regex ]] && flag="otp"
 
 if [[ "$flag" == "otp" ]]; then
-	pass otp show -c "$password"
+  pass otp show -c "$password"
 else
-	pass show -c "$password"
+  pass show -c "$password"
 fi
