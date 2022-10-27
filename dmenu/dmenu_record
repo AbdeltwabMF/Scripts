@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 # Usage:
 # `$0`: Ask for recording type via dmenu
@@ -69,7 +69,7 @@ audio() {
   ffmpeg \
     -f alsa -i default \
     -c:a flac \
-    $HOME/vault/ods/audio/"audio-$(date '+%I:%M:%S %p %Y-%m-%d')".flac &
+    $HOME/vault/music/recording/"audio-$(date '+%I:%M:%S %p %Y-%m-%d')".flac &
 
   echo $! > /tmp/recordingpid
   updateicon ""

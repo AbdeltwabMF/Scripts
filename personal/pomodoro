@@ -7,11 +7,11 @@ DBUS_SESSION_BUS_ADDRESS=$(cat /tmp/dbus-current-session)
 
 message_body() {
   if [[ "$(date "+%M")" -eq "50" ]]; then
-    echo "You've done a great job"
-    echo "Time to take a break 😌"
+    echo "<b><span color=\"white\">You've done a great job</span></b> ✅"
+    echo "Time to take a <b><span color=\"green\">break</span></b> 😌"
   else
     echo "A new session has begun"
-    echo "You have 25 minutes to achieve something valuable 🤓"
+    echo "You have <b><span color=\"white\">25 minutes</span></b> to achieve something valuable 🤓"
   fi
 }
 

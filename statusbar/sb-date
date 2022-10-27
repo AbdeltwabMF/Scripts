@@ -6,5 +6,5 @@ ICON=""
 echo -e "${ICON} $(date +'%a, %d.%m')"
 
 case ${BUTTON} in
-    1) notify-send -t 20000 "التاريخ الهجري" "$(next-prayer --hijri)" ;;
+  1) notify-send -t 20000 "التاريخ الهجري" "$(next-prayer --hijri)" ;;
 esac

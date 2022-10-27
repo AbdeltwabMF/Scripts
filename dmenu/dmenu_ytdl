@@ -1,49 +1,46 @@
-#!/bin/bash
+#!/usr/bin/bash
 #
 # Watch or Download an online video or audio
 # using yt-dlp and mpv combined as a backend
 # using dmenu as a frontend
 
-TMP_DIR="/tmp/dmenu_ytdl"
-date=$(date +"%Y.%m.%d %I:%M:%S %p %A")
-
-yt-mpv() {
-	case "$1" in
-		# for better quality (1280x720) pass 22 instead of 18, for the best do not pass anything.
-		22) setsid mpv --ytdl-format=22 "$(xclip -o)" ;;
-		18) setsid mpv --ytdl-format=18 "$(xclip -o)" ;;
-		*) setsid mpv "$(xclip -o)" ;;
-	esac
+yt_mpv() {
+  case "$1" in
+    # for better quality (1280x720) pass 22 instead of 18, for the best do not pass anything.
+    22) setsid mpv --ytdl-format=22 "$(xclip -o)" ;;
+    18) setsid mpv --ytdl-format=18 "$(xclip -o)" ;;
+    *) setsid mpv "$(xclip -o)" ;;
+  esac
 }
 
 # Download audio Only
-yt-audio() {
-	setsid "${TERMINAL}" -e yt-dlp -x --audio-format "mp3" -i --add-metadata --embed-thumbnail \
-		-o "$HOME/vault/audios/Music/%(title)s.%(ext)s" "$(xclip -o)"
+yt_audio() {
+  setsid "${TERMINAL}" -e yt-dlp -x --audio-format "mp3" -i --add-metadata --embed-thumbnail \
+    -o "$HOME/vault/download/music/%(title)s.%(ext)s" "$(xclip -o)"
 }
 
 # Download single video
-yt-video() {
-	setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
-		-o "$HOME/vault/videos/Videos/%(title)s.%(ext)s" "$(xclip -o)"
+yt_video() {
+  setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
+    -o "$HOME/vault/download/videos/%(title)s.%(ext)s" "$(xclip -o)"
 }
 
 # Download YouTube playlist videos in separate directory indexed by video order in a playlist
-yt-plist() {
-	setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
-		-o "$HOME/vault/videos/Videos/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$(xclip -o)"
+yt_plist() {
+  setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
+    -o "$HOME/vault/download/videos/playlist/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$(xclip -o)"
 }
 
-choice=$(echo -e "Watch\nAudio-dl\nVideo-dl\nPlaylist-dl" \
-	| dmenu -p "What you're gonna do with this media link?")
-[[ "${choice}" = "Watch" ]] && format=$(echo -e "22\n18" \
-	| dmenu -p "Which Format?")
+choice=$(echo -e "Watch\nAudio-dl\nVideo-dl\nPlaylist-dl" |
+  dmenu -p "What you're gonna do with this media link?")
+[[ "${choice}" = "Watch" ]] && format=$(echo -e "22\n18" |
+  dmenu -p "Which Format?")
 
 case "${choice}" in
-	Watch) yt-mpv "${format}" ;;
-	Audio-dl) yt-audio ;;
-	Video-dl) yt-video ;;
-	Playlist-dl) yt-plist ;;
+  Watch) yt_mpv "${format}" ;;
+  Audio-dl) yt_audio ;;
+  Video-dl) yt_video ;;
+  Playlist-dl) yt_plist ;;
 esac
 
 # TODO: Log URL and time of download to be inspected later
