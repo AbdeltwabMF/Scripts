@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+#
+# Syncs repositories and downloads updates, meant to be run as a cronjob.
+
+# Check for connection
+check_for_connection() {
+  ping -q -c 1 example.org 1> /dev/null 2>&1 || exit 1
+}
+
+notify() {
+  local header
+  header="📦 Repository Sync"
+  local message
+  message="You have <span color=\"red\">$1</span> packages that need updates."
+  notify-send "$header" "$message"
+}
+
+update_statusbar() {
+  pkill -RTMIN+8 "${STATUSBAR:-dwmblocks}"
+}
+
+check_for_updates() {
+  check_for_connection
+  sudo pacman -Syyuuw --noconfirm 2> /dev/null
+  update_statusbar
+  notify "$(sudo pacman -Qu | grep -Fcv "[ignored]")"
+}
+
+check_for_updates
