@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/bash
 #
 # Logout, reboot or shutdown using the power of dmenu
 
-choice=$(echo -e "Screensaver\nLogout\nReboot\nShutdown" | dmenu -p "We're sorry to see you go :(")
-[[ ${choice} == "" ]] && exit 0
+choice=$(echo -e " Screensaver\n鈴 Sleep\n⏼ Hibernate\n⏾ Hybrid suspend\n⭘ Sleep then hibernate\n Logout\n Reboot\n Shutdown" | dmenu -p "Please Stay 🙂" -l 10)
+[[ ${choice} == "" ]] && exit 1
 
 confirm=$(echo -e "No\nYes" | dmenu -p "Are you sure you wanna ${choice}?")
 regexp="(^No$)|(^$)"
@@ -12,11 +12,15 @@ regexp="(^No$)|(^$)"
 xdg-screensaver reset
 
 case "$choice" in
-  Reboot) sudo reboot ;;
-  Shutdown) sudo poweroff ;;
-  Logout)
-		xdg-screensaver activate;
-		slock -m "Locked at $(date "+%A %d, %I:%M:%S %p")" us-layout
-		;;
-	Screensaver) xdg-screensaver activate ;;
+  " Screensaver") xdg-screensaver activate ;;
+  "鈴 Sleep") loginctl suspend ;;
+  "⏼ Hibernate") loginctl hibernate ;;
+  "⏾ Hybrid sleep") loginctl hybrid-sleep ;;
+  "⭘ Sleep then hibernate") loginctl suspend-then-hibernate ;;
+  " Logout")
+    xdg-screensaver activate
+    slock -m "Locked at $(date "+%A %d, %I:%M:%S %p")" toggle-layout "us"
+    ;;
+  " Reboot") loginctl reboot ;;
+  " Shutdown") loginctl poweroff ;;
 esac
