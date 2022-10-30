@@ -73,7 +73,7 @@ case "${state}" in
   "Unknown") status="ﳠ" ;;
   "Full") status="" ;;
   "")
-    status=""
+    status=""
     percentage="AC"
     ;;
 esac
