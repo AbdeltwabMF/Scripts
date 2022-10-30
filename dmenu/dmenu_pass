@@ -31,3 +31,5 @@ if [[ "$flag" == "otp" ]]; then
 else
   pass show -c "$password"
 fi
+
+notify-send "🔑 Password Manager" "<span color=\"cyan\">$password</span> copied to the clipboard"
