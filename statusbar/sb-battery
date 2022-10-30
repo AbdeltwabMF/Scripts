@@ -43,7 +43,13 @@ notify() {
       echo "15" > $STATE
       ;;
     "con")
-      notify-send "$HEADER" \
+      local urgancy
+      if [[ "$adapter" == "of-line" ]]; then
+        urgancy="critical"
+      else
+        urgancy="normal"
+      fi
+      notify-send -u "$urgancy" "$HEADER" \
         "Adapter $adapter"
       ;;
     "info")

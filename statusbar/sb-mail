@@ -18,9 +18,6 @@ azhar_uni_spam_new=$(find "$PREFIX"/azhar-uni/Spambox/new/* -type f 2> /dev/null
 unread=$((gmail_inbox_new + gmail_2_inbox_new + azhar_uni_inbox_new + office_inbox_new))
 unread=$((unread + gmail_spam_new + gmail_2_spam_new + azhar_uni_spam_new + office_spam_new))
 
-# Notify on new mails
-mailnotify
-
 if ((unread > 99)); then
   unread="+99"
 fi

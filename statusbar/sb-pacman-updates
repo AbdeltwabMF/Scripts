@@ -2,7 +2,10 @@
 #
 # Description: Display how many packages need approval to be update
 
-CACHE_FILE="$HOME/.cache/pacups.packages"
+PREFIX="${XDG_CACHE_HOME:-$HOME/.cache}/statusbar"
+mkdir -p "$PREFIX"
+
+CACHE_FILE="$PREFIX/sb-pacman-updates"
 PACKAGE_ICON=""
 
 packages=$(sudo pacman -Qu | grep -Fcv "[ignored]")
