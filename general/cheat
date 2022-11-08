@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+#
+#
+
+curl -sL cheat.sh/"$1"

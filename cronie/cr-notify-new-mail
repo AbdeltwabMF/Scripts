@@ -5,6 +5,9 @@
 
 PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}"/Mail/
 
+export DBUS_SESSION_BUS_ADDRESS
+DBUS_SESSION_BUS_ADDRESS=$(cat /tmp/dbus-current-session)
+
 declare -a locations=(
   "gmail/Inbox/new"
   "gmail/[Gmail]/Spam/new"
@@ -31,7 +34,7 @@ unset IFS
 
 notify() {
   local header
-  header="📬 E-Mail"
+  header="E-Mail"
   local message
   message="You have <span color=\"red\">$1</span> new mails"
   notify-send "$header" "$message"

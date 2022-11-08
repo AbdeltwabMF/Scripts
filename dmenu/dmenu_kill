@@ -5,11 +5,22 @@
 process=$(ps -u "$USER" -o pid,%mem,%cpu,comm |
   sort -b -k2 -r |
   sed -ne '1!p' |
-  dmenu -l 15 -p "🪚 Choose process to KILL")
+  dmenu -l 15 -p "Choose process to KILL")
 
 pid=$(echo "${process}" | awk '{print $1}')
 name=$(echo "${process}" | awk '{print $4}')
 
-[[ -n "${pid}" ]] &&
-  kill -9 "${pid}" > /dev/null 2>&1 &&
-  notify-send "🪚 Killing Mission" "You just killed ${name}, oh monster 🐯"
+[[ -z "${pid}" ]] && exit 1
+
+notify() {
+  local header="Kill -9"
+  local message="You just killed ${name}, oh monster 🐯"
+  notify-send -u low "$header" "$message"
+}
+
+kill_ps() {
+  kill -9 "${pid}" > /dev/null 2>&1
+  notify
+}
+
+kill_ps

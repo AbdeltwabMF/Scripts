@@ -1,0 +1,27 @@
+#!/usr/bin/bash
+#
+# Description: add rss feed to newsboat by passing the link
+# Dependancy: newsboat
+
+NEWSBOAT_URLS="${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/urls"
+
+notify() {
+  local header="Newsboat Urls"
+  local message=$1
+  notify-send -c "$2" -u "$3" "$header" "$message"
+}
+
+[[ -z "$1" ]] && notify "You need to specify URL." "warn" "critical" && exit 1
+
+if echo "$1" | grep -q "https*://\S\+\.[A-Za-z]\+\S*"; then
+  url="$1"
+else
+  url="$(grep -Eom1 '<[^>]+(rel="self"|application/[a-z]+\+xml)[^>]+>' "$1" | grep -o "https?://[^\" ]")"
+  echo "$url" | grep -q "https*://\S\+\.[A-Za-z]\+\S*" || notify "That doesn't look like a full URL." "warn" "critical" && exit 1
+fi
+
+if awk '{print $1}' "$NEWSBOAT_URLS" | grep "^$url$" > /dev/null; then
+  notify "You already have this RSS feed." "success" "low"
+else
+  echo "$url" >> "$NEWSBOAT_URLS" && notify-send "RSS feed added." "success" "low"
+fi

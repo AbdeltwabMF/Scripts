@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+#
+#
+# Dependancy: transmission
+
+notify() {
+  local header="Transmission"
+  local message=$1
+  notify-send -c "$2" -u "$3" "$header" "$message"
+}
+
+add_torrent() {
+  if transmission-remote -a "$1" 2> /dev/null; then
+    notify "Torrent added." "success" "low"
+  else
+    notify "Failed to add torrent." "warn" "critical"
+  fi
+}
+
+add_torrent "$@"

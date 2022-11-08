@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+#
+#
+
+update_sb() {
+  pkill -RTMIN+6 dwmblocks
+}
+
+case "$1" in
+  up)
+    pamixer -i 2
+    ;;
+  down)
+    pamixer -d 2
+    ;;
+  toggle)
+    pamixer -t
+    ;;
+  set)
+    pamixer --set-volume "$2"
+    ;;
+esac
+
+update_sb

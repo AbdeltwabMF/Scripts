@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+#
+# Description: Take a webcam shot when someone login
+
+PICTURES_PATH=$HOME/vault/pictures/screenshots/login
+pic_name=$(date +"%Y.%m.%d %I:%M:%S %p %A")
+
+fswebcam -q --no-banner -r 1366x768 "${PICTURES_PATH}/${pic_name}".png
+
+# copy it to the clipboard
+cat "${PICTURES_PATH}/${pic_name}".png | xclip -sel clipboard -t image/png

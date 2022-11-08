@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+#
+#
+
+NOTIFICATION_FILE=$HOME/.local/share/sounds/rain_drop.wav
+
+aplay "$NOTIFICATION_FILE"

@@ -1,0 +1,5 @@
+#!/usr/bin/sh
+#
+# Description: Kill the current window using xdotool tool
+
+xdotool windowclose "$(xdotool getactivewindow)" 2> /dev/null 1>&2

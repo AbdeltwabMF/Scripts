@@ -25,4 +25,4 @@ else
 fi
 
 xwallpaper --zoom "${CACHE}"/"${WALL}"/wall.jpg > /dev/null 2>&1 &&
-  notify-send "Wallpaper" "wallpaper has been changed!" -i "${CACHE}"/"${WALL}"/wall.jpg
+  notify-send "Wallpaper" "Wallpaper changed successfully." -i "${CACHE}"/"${WALL}"/wall.jpg

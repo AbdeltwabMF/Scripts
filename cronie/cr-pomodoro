@@ -15,4 +15,4 @@ message_body() {
   fi
 }
 
-notify-send "⏰ Pomodoro Cronie" "$(message_body)"
+notify-send -u LOW "⏰ Pomodoro Cronie" "$(message_body)"

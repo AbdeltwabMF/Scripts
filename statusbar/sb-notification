@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+#
+# Description: Toggle notification
+# A do-not-disturb button for toggling dunst notifications.

@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+#
+# Description: Show the number of running Docker containers.
+
+DOCKER_ICON=""
+
+container_count=$(sudo docker ps -q)
+
+echo "$DOCKER_ICON $container_count"

@@ -6,9 +6,9 @@ name=$(echo $1 | sed "s|^.*/||g; s|.git||g")
 readonly CUR_DIR=$(pwd)/${name}
 
 if [[ -d "${CUR_DIR}" ]]; then
-    cd "${CUR_DIR}" || exit 1
+  cd "${CUR_DIR}" || exit 1
 else
-    mkdir "${CUR_DIR}" && cd "${CUR_DIR}" || exit 1
+  mkdir "${CUR_DIR}" && cd "${CUR_DIR}" || exit 1
 fi
 
 git init "${CUR_DIR}"
