@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+#
+
+SOUND_FILE=$HOME/.local/share/sounds/hey-take-a-look-girl-ringtone.wav
+
+aplay "$SOUND_FILE"

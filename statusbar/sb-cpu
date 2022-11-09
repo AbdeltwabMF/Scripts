@@ -11,9 +11,9 @@ echo -e "$CPU_ICON $utilization%"
 
 top_cpu_usage() {
   printf "%s" "$(ps axch -o %cpu,cmd --sort=-%cpu | sed 11q |
-    awk 'BEGIN { printf "%-30s %s\n", "Process:", "Usage:";
-      printf "%-30s %s\n", "--------", "------" }
-      { printf "%-30s %s\n", $2, $1 "%" }')"
+    awk 'BEGIN { printf "%-20s %s\n", "Process:", "Usage:";
+      printf "%-20s %s\n", "--------", "------" }
+      { printf "%-20s %s\n", $2, $1 "%" }')"
 }
 
 case ${BUTTON} in

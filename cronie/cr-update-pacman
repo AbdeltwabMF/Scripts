@@ -9,7 +9,7 @@ check_for_connection() {
 
 notify() {
   local header
-  header="Repository Sync"
+  header="Pacman"
   local message
   message="You have <span color=\"red\">$1</span> packages that need updates."
   notify-send "$header" "$message"

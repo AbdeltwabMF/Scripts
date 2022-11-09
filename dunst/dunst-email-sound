@@ -3,6 +3,6 @@
 # File: dunst_email_sound
 # Description: play an email sound when a new email arrives
 
-ADHAN_FILE=$HOME/.local/share/sounds/email.wav
+SOUND_FILE=$HOME/.local/share/sounds/email.wav
 
-aplay "$ADHAN_FILE"
+aplay "$SOUND_FILE"

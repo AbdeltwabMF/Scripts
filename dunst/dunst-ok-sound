@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+#
+
+SOUND_FILE=$HOME/.local/share/sounds/ok-female-voice-tone.wav
+
+aplay "$SOUND_FILE"

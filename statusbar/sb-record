@@ -4,10 +4,9 @@
 #
 
 ICON_FILE=/tmp/recordingicon
-touch $ICON_FILE
 RECORD_ICON=""
 
-[[ -z "$(cat $ICON_FILE)" ]] && echo "$RECORD_ICON" > "$ICON_FILE"
+[[ -n "$(cat $ICON_FILE)" ]] && RECORD_ICON="$(cat $ICON_FILE)"
 
 printf "%s" "${RECORD_ICON}"
 
