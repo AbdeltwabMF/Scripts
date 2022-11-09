@@ -5,11 +5,13 @@
 
 export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export DISPLAY=:0.0
+
+export ICEAUTHORITY="${XDG_CACHE_HOME:-$HOME/.cache}/ICEauthority"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 
 export DBUS_SESSION_BUS_ADDRESS
 DBUS_SESSION_BUS_ADDRESS=$(cat /tmp/dbus-current-session)
-
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 
 /usr/bin/mbsync -ac "${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
 

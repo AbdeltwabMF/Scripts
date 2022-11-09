@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+#
+
+SOUND_FILE=$HOME/.local/share/sounds/hmm-girl-tone.wav
+
+aplay "$SOUND_FILE"

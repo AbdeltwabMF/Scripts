@@ -2,7 +2,7 @@
 #
 #
 
-HEADER="Battery Info"
+HEADER="Battery"
 IS_ONLINE=/tmp/sb-battery-online
 STATE=/tmp/sb-battery-state
 
@@ -20,37 +20,37 @@ info() {
 }
 
 first_timer() {
-  [[ "$adapter" == "on-line" ]] && echo 0
-  [[ -z "$(cat $STATE)" ]] && echo 1
+  [[ "$adapter" == "on-line" ]] && cat /dev/null > $STATE && echo 0 && return
+  [[ -z "$(cat $STATE)" ]] && echo 1 && return
   [[ "$(cat $STATE)" == "$1" ]] && echo 0 || echo 1
 }
 
 notify() {
   case "$1" in
     35)
-      [[ "$(first_timer 35)" == "1" ]] && notify-send -u low "$HEADER" \
+      [[ "$(first_timer 35)" == "1" ]] && notify-send -u low -c warn "$HEADER" \
         "We ran out of energy!"
       echo "35" > $STATE
       ;;
     25)
-      [[ "$(first_timer 25)" == "1" ]] && notify-send "$HEADER" \
+      [[ "$(first_timer 25)" == "1" ]] && notify-send -c warn "$HEADER" \
         "Come on! you have to do something, bro!"
       echo "25" > $STATE
       ;;
     15)
-      [[ "$(first_timer 15)" == "1" ]] && notify-send -u critical "$HEADER" \
+      [[ "$(first_timer 15)" == "1" ]] && notify-send -u critical -c warn "$HEADER" \
         "Tesla is upset with you!"
       echo "15" > $STATE
       ;;
     "con")
       local urgancy
-      if [[ "$adapter" == "of-line" ]]; then
+      if [[ "$adapter" == "off-line" ]]; then
         urgancy="critical"
       else
-        urgancy="normal"
+        urgancy="low"
       fi
       notify-send -u "$urgancy" "$HEADER" \
-        "Adapter $adapter"
+        "Adapter goes $adapter"
       ;;
     "info")
       notify-send "$HEADER" \

@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+#
+#
+
+if pgrep audsp; then
+  killall -9 audsp
+else
+  xsel | festival --tts &
+fi

@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+#
+
+SOUND_FILE=$HOME/.local/share/sounds/if-you-dont-pick-ringtone-2.wav
+
+aplay "$SOUND_FILE"
