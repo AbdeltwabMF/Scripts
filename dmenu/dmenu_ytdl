@@ -4,31 +4,37 @@
 # using yt-dlp and mpv combined as a backend
 # using dmenu as a frontend
 
+if [[ -z "$1" ]]; then
+  URL="$(xclip -o)"
+else
+  URL="$1"
+fi
+
 yt_mpv() {
   case "$1" in
     # for better quality (1280x720) pass 22 instead of 18, for the best do not pass anything.
-    22) setsid mpv --ytdl-format=22 "$(xclip -o)" ;;
-    18) setsid mpv --ytdl-format=18 "$(xclip -o)" ;;
-    *) setsid mpv "$(xclip -o)" ;;
+    22) setsid mpv --ytdl-format=22 "$URL" ;;
+    18) setsid mpv --ytdl-format=18 "$URL" ;;
+    *) setsid mpv "$URL" ;;
   esac
 }
 
 # Download audio Only
 yt_audio() {
   setsid "${TERMINAL}" -e yt-dlp -x --audio-format "mp3" -i --add-metadata --embed-thumbnail \
-    -o "$HOME/vault/download/music/%(title)s.%(ext)s" "$(xclip -o)"
+    -o "$HOME/vault/download/music/%(title)s.%(ext)s" "$URL"
 }
 
 # Download single video
 yt_video() {
   setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
-    -o "$HOME/vault/download/videos/%(title)s.%(ext)s" "$(xclip -o)"
+    -o "$HOME/vault/download/videos/%(title)s.%(ext)s" "$URL"
 }
 
 # Download YouTube playlist videos in separate directory indexed by video order in a playlist
 yt_plist() {
   setsid "${TERMINAL}" -e yt-dlp -f 22 -i --add-metadata \
-    -o "$HOME/vault/download/videos/playlist/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$(xclip -o)"
+    -o "$HOME/vault/download/videos/playlist/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$URL"
 }
 
 choice=$(echo -e "Watch\nAudio-dl\nVideo-dl\nPlaylist-dl" |

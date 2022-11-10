@@ -20,27 +20,37 @@ info() {
 }
 
 first_timer() {
-  [[ "$adapter" == "on-line" ]] && cat /dev/null > $STATE && echo 0 && return
-  [[ -z "$(cat $STATE)" ]] && echo 1 && return
-  [[ "$(cat $STATE)" == "$1" ]] && echo 0 || echo 1
+  if [[ "$adapter" == "on-line" ]]; then
+    cat /dev/null > $STATE
+    echo 0
+    return
+  fi
+  if [[ -z "$(cat $STATE)" ]]; then
+    echo 1
+    return
+  fi
+  if [[ "$(cat $STATE)" == "$1" ]]; then
+    echo 0
+    return
+  fi
 }
 
 notify() {
   case "$1" in
     35)
       [[ "$(first_timer 35)" == "1" ]] && notify-send -u low -c warn "$HEADER" \
-        "We ran out of energy!"
-      echo "35" > $STATE
+        "We ran out of energy!" &&
+        echo "35" > $STATE
       ;;
     25)
       [[ "$(first_timer 25)" == "1" ]] && notify-send -c warn "$HEADER" \
-        "Come on! you have to do something, bro!"
-      echo "25" > $STATE
+        "Come on! you have to do something, bro!" &&
+        echo "25" > $STATE
       ;;
     15)
       [[ "$(first_timer 15)" == "1" ]] && notify-send -u critical -c warn "$HEADER" \
-        "Tesla is upset with you!"
-      echo "15" > $STATE
+        "Tesla is upset with you!" &&
+        echo "15" > $STATE
       ;;
     "con")
       local urgancy
