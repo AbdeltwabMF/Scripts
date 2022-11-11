@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+#
+#
+
+/usr/bin/sudo /usr/bin/updatedb
+/usr/bin/sudo /usr/bin/mandb

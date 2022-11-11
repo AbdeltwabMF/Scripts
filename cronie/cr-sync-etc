@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+#
+#
+
+sudo /usr/bin/rsync -arv /etc/ /mnt/vault/etc

@@ -1,0 +1,57 @@
+#!/usr/bin/bash
+#
+#
+
+TIMER_ICON_ON="祥"
+TIMER_ICON_OFF="精"
+
+START_TIME_FILE=/tmp/sb-stopwatch-start-time
+START_TIME=$(cat $START_TIME_FILE)
+
+restart_timer() {
+  CURR_TIME=$(date '+%s')
+  CURR_TIME=$((CURR_TIME + 7200))
+  printf "%s" "$CURR_TIME" > "$START_TIME_FILE"
+}
+
+stop_timer() {
+  cat /dev/null > "$START_TIME_FILE"
+}
+
+notify() {
+  local header="Stopwatch"
+  local message="$1"
+  notify-send "$header" "$message"
+}
+
+main() {
+  if [[ -z "$START_TIME" ]]; then
+    printf "%s\r" "$TIMER_ICON_OFF"
+  else
+    CURR_TIME=$(date '+%s')
+    TIME_DIFFERENCE=$((CURR_TIME - START_TIME))
+
+    printf "%s %s\r" "$TIMER_ICON_ON" "$(date --date="@$TIME_DIFFERENCE" '+%H:%M:%S')"
+  fi
+}
+
+case "$BUTTON" in
+  1)
+    choice=$(printf "Start\nStop" | dmenu -p "What to do:")
+
+    case "${choice}" in
+      Start)
+        restart_timer
+        notify "Timer started"
+        ;;
+      Stop)
+        stop_timer
+        if [[ -n "$START_TIME" ]]; then
+          notify "Timer stopped"
+        fi
+        ;;
+    esac
+    ;;
+esac
+
+main
