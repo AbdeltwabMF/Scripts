@@ -2,7 +2,7 @@
 #
 # Logout, reboot or shutdown using the power of dmenu
 
-choice=$(echo -e " Screensaver\n鈴 Sleep\n⏼ Hibernate\n⏾ Hybrid suspend\n⭘ Sleep then hibernate\n Logout\n Reboot\n Shutdown" | dmenu -p "Please Stay 🙂" -l 10)
+choice=$(echo -e " Screensaver\n鈴 Sleep\n⏼ Hibernate\n⏾ Hybrid sleep\n⭘ Sleep then hibernate\n Logout\n Reboot\n Shutdown" | dmenu -p "Please Stay 🙂" -l 10)
 [[ ${choice} == "" ]] && exit 1
 
 confirm=$(echo -e "No\nYes" | dmenu -p "Are you sure you wanna ${choice}?")
