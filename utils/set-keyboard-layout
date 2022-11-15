@@ -1,0 +1,47 @@
+#!/usr/bin/bash
+#
+# Author: Abd El-Twab M. Fakhry
+# Description: Toggle the keyboard layout between Arabic and English
+# License: GPLv3+
+
+XKBD_DIR="$HOME"/.config/x11/xkeybindings
+
+update_statusbar() {
+  pkill -RTMIN+14 "${STATUSBAR:-dwmblocks}"
+}
+
+# Parameter: language abbreviation: ar, us...
+set_layout() {
+  setxkbmap -layout "$1"
+
+  # custom modmap
+  [[ -f "${XKBD_DIR}"/.Xmodmap_"$1" ]] &&
+    xmodmap "${XKBD_DIR}"/.Xmodmap_"$1"
+}
+
+toggle_layout() {
+  local cur_layout
+  cur_layout=$(setxkbmap -query | tr , ' ' | awk 'FNR == 3 {print $2}')
+
+  case "${cur_layout}" in
+    "us") set_layout "ar" ;;
+    "ar" | *) set_layout "us" ;;
+  esac
+}
+
+process_args() {
+  case "$1" in
+    "ar")
+      set_layout "ar"
+      ;;
+    "toggle")
+      toggle_layout
+      ;;
+    "us" | "")
+      set_layout "us"
+      ;;
+  esac
+  update_statusbar
+}
+
+process_args "$@"

@@ -25,22 +25,22 @@ toggle_layout() {
 
   case "${cur_layout}" in
     "us") set_layout "ar" ;;
-    "ar") set_layout "us" ;;
+    "ar" | *) set_layout "us" ;;
   esac
-
-  if [[ "$cur_layout" == "us" ]]; then
-    cur_layout="ar"
-  else
-    cur_layout="us"
-  fi
 }
 
 process_args() {
-  if [[ -z "$1" ]]; then
-    toggle_layout
-  else
-    set_layout "$1"
-  fi
+  case "$1" in
+    "ar")
+      set_layout "ar"
+      ;;
+    "toggle")
+      toggle_layout
+      ;;
+    "us" | "")
+      set_layout "us"
+      ;;
+  esac
   update_statusbar
 }
 

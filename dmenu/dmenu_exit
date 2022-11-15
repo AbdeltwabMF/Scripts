@@ -19,7 +19,7 @@ case "$choice" in
   "⭘ Sleep then hibernate") loginctl suspend-then-hibernate ;;
   " Logout")
     xdg-screensaver activate
-    slock -m "Locked at $(date "+%A %d, %I:%M:%S %p")" toggle-layout "us"
+    slock -m "Locked at $(date "+%A %d, %I:%M:%S %p")" set-keyboard-layout "us"
     ;;
   " Reboot") loginctl reboot ;;
   " Shutdown") loginctl poweroff ;;

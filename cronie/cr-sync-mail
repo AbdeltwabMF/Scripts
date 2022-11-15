@@ -15,5 +15,11 @@ DBUS_SESSION_BUS_ADDRESS=$(cat /tmp/dbus-current-session)
 
 /usr/bin/mbsync -ac "${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
 
+update_sb() {
+  pkill -RTMIN+12 "${STATUSBAR:-dwmblocks}"
+}
+
+updatedb
+
 # Notify new mails
 "$HOME"/.local/sbin/cronie/cr-notify-new-mail

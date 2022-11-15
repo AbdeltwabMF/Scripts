@@ -15,8 +15,8 @@ get_layout() {
     ar) lang="ar" ;;
     us) lang="us" ;;
     *)
-      # Force toggle
-      toggle-layout "us"
+      # Force toggle to US_en
+      set-keyboard-layout "us"
       lang="us"
       ;;
   esac
@@ -27,5 +27,5 @@ get_layout() {
 echo "$LANG_ICON $(get_layout)"
 
 case "${BUTTON}" in
-  1) toggle-layout ;;
+  1) set-keyboard-layout ;;
 esac

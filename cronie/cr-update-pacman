@@ -15,14 +15,14 @@ notify() {
   notify-send "$header" "$message"
 }
 
-update_statusbar() {
-  pkill -RTMIN+8 "${STATUSBAR:-dwmblocks}"
+update_sb() {
+  pkill -RTMIN+3 "${STATUSBAR:-dwmblocks}"
 }
 
 check_for_updates() {
   check_for_connection
   sudo pacman -Syyuuw --noconfirm 2> /dev/null
-  update_statusbar
+  update_sb
   notify "$(sudo pacman -Qu | grep -Fcv "[ignored]")"
 }
 
