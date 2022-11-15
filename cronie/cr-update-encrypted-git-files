@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+#
+#
+
+LOCAL_PREFIX="$HOME/.local"
+CONFI_PREFIX="$HOME/.config"
+EXEC="$LOCAL_PREFIX"/sbin/general/enc
+
+## Local Prefix
+# Binary - Object name - Output directory
+"$EXEC" subscriptions.sqlite "$LOCAL_PREFIX"/share/yt-local/data
+
+## Config prefix
+"$EXEC" locs.txt "$CONFI_PREFIX"/next-prayer
+"$EXEC" np_config.py "$CONFI_PREFIX"/next-prayer
+"$EXEC" email.el "$CONFI_PREFIX"/emacs
+"$EXEC" megarc "$CONFI_PREFIX"/mega

@@ -1,14 +1,35 @@
-#!/bin/sh
+#!/usr/bin/bash
+#
+#
+# Description: Decrypt given file or directory
 
-# DECRYPTED_DATA_DIR=""
+OBJECT="$1"
+OUTPUT_DIR="$2"
 
-[ "$1" = "" ] && echo "No such a file or directory!" && exit 1
+decrypted_file_name="${OBJECT/.gpg/}"
 
-decrypt_for_home() {
-  gpg -d "$1" > $(echo $1 | sed "s/.gpg//g")
-  7za x -so $(echo $1 | sed "s/.gpg//g") | tar xf -
-  rm -rf $(echo $1 | sed "s/.gpg//g")
-  rm -rf "$1"
+_test() {
+  [[ -z "$OBJECT" ]] && echo "No such a file or directory!" && exit 1
+  [[ -z "$OUTPUT_DIR" ]] && OUTPUT_DIR="."
 }
 
-decrypt_for_home "$@"
+_decrypt() {
+  gpg -d "$OUTPUT_DIR/$OBJECT" > "$OUTPUT_DIR/${decrypted_file_name:?}"
+}
+
+_dearchive() {
+  7za x -so "$OUTPUT_DIR/${decrypted_file_name:?}" | tar xpzPf -
+}
+
+_clean() {
+  rm -rf "$OUTPUT_DIR/${decrypted_file_name:?}"
+}
+
+main() {
+  _test
+  _decrypt
+  _dearchive
+  _clean
+}
+
+main

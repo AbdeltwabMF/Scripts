@@ -1,13 +1,34 @@
-#!/bin/sh
+#!/usr/bin/bash
+#
+#
+# Description: Encrypt and compress given file or directory to another given directory
 
-# ENCRYPTED_DATA_DIR=""
+OBJECT="$1"
+OUTPUT_DIR="$2"
 
-[ "$1" = "" ] && echo "No such a file or directory!" && exit 1
-
-encrypt_for_git() {
-  tar cf - "$1" | 7za a -si "$1".tar.7z
-  gpg -er $(gpg -k | grep 'ry (pw) <a' | sed "s/^.*<\|>//g") "$1".tar.7z
-  rm -rf "$1".tar.7z
+_test() {
+  [[ -z "$OBJECT" ]] && echo "No such a file or directory!" && exit 1
+  [[ -z "$OUTPUT_DIR" ]] && OUTPUT_DIR="."
 }
 
-encrypt_for_git "$@"
+_archive() {
+  tar cpPzf - "$OUTPUT_DIR/$OBJECT" | 7za a -si "$OUTPUT_DIR/$OBJECT".tar.7z
+}
+
+_encrypt() {
+  rm -rf "$OUTPUT_DIR/$OBJECT".tar.7z.gpg
+  gpg -er "$(gpg -k | grep 'ry (pw) <a' | sed 's/^.*<\|>//g')" "$OUTPUT_DIR/$OBJECT".tar.7z
+}
+
+_clean() {
+  rm -rf "$OUTPUT_DIR/$OBJECT".tar.7z
+}
+
+main() {
+  _test
+  _archive
+  _encrypt
+  _clean
+}
+
+main
