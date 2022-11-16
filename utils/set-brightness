@@ -3,7 +3,7 @@
 #
 
 update_sb() {
-  pkill -RTMIN+5 "${STATUSBAR:-dwmblocks}"
+  pkill -RTMIN+5 dwmblocks
 }
 
 value="$2"

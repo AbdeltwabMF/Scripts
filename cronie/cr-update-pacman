@@ -16,7 +16,7 @@ notify() {
 }
 
 update_sb() {
-  pkill -RTMIN+3 "${STATUSBAR:-dwmblocks}"
+  pkill -RTMIN+3 dwmblocks
 }
 
 check_for_updates() {

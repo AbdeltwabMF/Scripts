@@ -7,7 +7,7 @@
 XKBD_DIR="$HOME"/.config/x11/xkeybindings
 
 update_statusbar() {
-  pkill -RTMIN+14 "${STATUSBAR:-dwmblocks}"
+  pkill -RTMIN+14 dwmblocks
 }
 
 # Parameter: language abbreviation: ar, us...
