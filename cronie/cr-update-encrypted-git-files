@@ -2,6 +2,14 @@
 #
 #
 
+export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
+export DISPLAY=:0.0
+
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+
+export DBUS_SESSION_BUS_ADDRESS
+DBUS_SESSION_BUS_ADDRESS=$(cat /tmp/dbus-current-session)
+
 LOCAL_PREFIX="$HOME/.local"
 CONFI_PREFIX="$HOME/.config"
 EXEC="$LOCAL_PREFIX"/sbin/general/enc
